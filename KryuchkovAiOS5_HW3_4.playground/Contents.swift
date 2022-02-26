@@ -111,14 +111,42 @@ myTV.whatCurrentChannel()
 // ЗАДАЧА №2
 print("\nЗАДАЧА №2\n")
 
+// Структура настроек ТВ
+struct SettingsTV {
+    // Свойство цветной/черно-белый
+    var isColor: Bool = true
+    // Свойство включена ли громкость или нет
+    var isVolumel: Bool = true
+}
 
 class LedTV: TV {
     
-    override init(modelDevice: String) {
+    var isColor: Bool
+    var isVolumel: Bool
+    
+    init(modelDevice: String, settingsTV: SettingsTV) {
+        self.isColor = settingsTV.isColor
+        self.isVolumel = settingsTV.isVolumel
+        
         super.init(modelDevice: modelDevice)
+    }
+    
+    // Дописать функцию выключить/включить звук
+    func volumeTurnOnOff() {
+        
+    }
+    
+    // Дописать функцию поменять вывод ТВ цвет/черно-белый
+    func colorTurnOnOff() {
+        
+    }
+    
+    // ПЕРЕПИСАТЬ МЕТОД, что показывается учитывая настройки громкости и цвета
+    override func whatCurrentChannel() {
+        
     }
 }
 
-
-let newTV = LedTV(modelDevice: "Toshiba XL20")
+let settingsNewTV = SettingsTV()
+let newTV = LedTV(modelDevice: "Toshiba XC20", settingsTV: settingsNewTV)
 newTV.whatModelDevice()
