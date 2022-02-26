@@ -1,8 +1,27 @@
 import UIKit
 
-// ЗАДАЧА №1
 
-enum ChannelTV {
+// ЗАДАЧА №1
+print("ЗАДАЧА №1\n")
+
+// Общий протокол на все электронные устройства
+protocol ElectronicDevices {
+    // Модель
+    var modelDevice: String {get set}
+    // Свойство: включен выключен
+    var isWork: Bool {get set}
+    
+    // метод проверки включен ли
+    func isWorking()
+    // Метод включения устройства
+    func turnOn()
+    // Метод выключения устройства
+    func turnOff()
+    // Метод вывода в консоль модели устройства
+    func whatModelDevice()
+}
+
+enum ChannelTV: Int {
     case one
     case two
     case three
@@ -24,24 +43,21 @@ enum ChannelTV {
     }
 }
 
-class TV {
-    private let modelTV: String
-    private var isWork: Bool
+class TV: ElectronicDevices {
+    var modelDevice: String
+    var isWork: Bool
     private var currentChannel: ChannelTV
     
-    // метод включить телевизор
     func turnOn() {
         isWork = true
         print("Телевизор включен! Приятного просмотра.")
     }
     
-    // метод выключить телевизор
     func turnOff() {
         isWork = false
         print("Телевизор выключается! До новых встреч!")
     }
     
-    // метод проверки включен ли телевизор
     func isWorking() {
         if isWork {
             print("Телевизор включен!")
@@ -50,7 +66,6 @@ class TV {
         }
     }
     
-    // метод проверки какой канал сейчас работает
     func whatCurrentChannel() {
         if isWork {
             print("Текущий канал - \(currentChannel.label)")
@@ -59,36 +74,41 @@ class TV {
         }
     }
     
-    // метод проверки модели телевизора
-    func whatModelTV() {
-        print("Модель телевизора - \(modelTV)")
+    func whatModelDevice() {
+        print("Модель телевизора - \(modelDevice)")
     }
     
     // метод переключения каналов
-    func changeChannelTV(nextChannel: ChannelTV) {
+    func changeChannelTV(newChannel: ChannelTV) {
         if isWork {
-            currentChannel = nextChannel
-            print("Вы переключили канал на - \(nextChannel.label)")
+            currentChannel = newChannel
+            print("Вы переключили канал на - \(newChannel.label)")
         }else {
             print("Телевизор выключен! Сначала включите телевизор!")
         }
     }
     
-    init(modelVT: String){
-        self.modelTV = modelVT
+    init(modelDevice: String){
+        self.modelDevice = modelDevice
         self.isWork = false
         self.currentChannel = ChannelTV.one
     }
 }
 
-var myTV = TV(modelVT: "Samsung QE55")
+var myTV = TV(modelDevice: "Samsung QE55")
 
-myTV.whatModelTV()
+myTV.whatModelDevice()
 myTV.isWorking()
-myTV.changeChannelTV(nextChannel: ChannelTV.two)
+myTV.changeChannelTV(newChannel: ChannelTV.one)
 myTV.whatCurrentChannel()
 myTV.turnOn()
 myTV.isWorking()
 myTV.whatCurrentChannel()
-myTV.changeChannelTV(nextChannel: ChannelTV.two)
+myTV.changeChannelTV(newChannel: ChannelTV.two)
 myTV.whatCurrentChannel()
+
+
+// ЗАДАЧА №2
+print("\nЗАДАЧА №2\n")
+
+
