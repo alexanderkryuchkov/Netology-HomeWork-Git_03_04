@@ -112,3 +112,13 @@ myTV.whatCurrentChannel()
 print("\nЗАДАЧА №2\n")
 
 
+class LedTV: TV {
+    
+    override init(modelDevice: String) {
+        super.init(modelDevice: modelDevice)
+    }
+}
+
+
+let newTV = LedTV(modelDevice: "Toshiba XL20")
+newTV.whatModelDevice()
