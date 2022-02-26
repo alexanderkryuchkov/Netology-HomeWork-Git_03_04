@@ -116,29 +116,41 @@ struct SettingsTV {
     // Свойство цветной/черно-белый
     var isColor: Bool = true
     // Свойство включена ли громкость или нет
-    var isVolumel: Bool = true
+    var isVolume: Bool = true
 }
 
 class LedTV: TV {
     
     var isColor: Bool
-    var isVolumel: Bool
+    var isVolume: Bool
     
     init(modelDevice: String, settingsTV: SettingsTV) {
         self.isColor = settingsTV.isColor
-        self.isVolumel = settingsTV.isVolumel
+        self.isVolume = settingsTV.isVolume
         
         super.init(modelDevice: modelDevice)
     }
     
     // Дописать функцию выключить/включить звук
     func volumeTurnOnOff() {
-        
+        if isVolume{
+            isVolume = false
+            print("Звук выключен")
+        }else {
+            isVolume = true
+            print("Звук включен")
+        }
     }
     
     // Дописать функцию поменять вывод ТВ цвет/черно-белый
     func colorTurnOnOff() {
-        
+        if isColor{
+            isColor = false
+            print("Телевизор переведен в черно-белый режим")
+        }else {
+            isColor = true
+            print("Телевизор переведен в цветной режим")
+        }
     }
     
     // ПЕРЕПИСАТЬ МЕТОД, что показывается учитывая настройки громкости и цвета
@@ -150,3 +162,7 @@ class LedTV: TV {
 let settingsNewTV = SettingsTV()
 let newTV = LedTV(modelDevice: "Toshiba XC20", settingsTV: settingsNewTV)
 newTV.whatModelDevice()
+newTV.volumeTurnOnOff()
+newTV.volumeTurnOnOff()
+newTV.colorTurnOnOff()
+newTV.colorTurnOnOff()
