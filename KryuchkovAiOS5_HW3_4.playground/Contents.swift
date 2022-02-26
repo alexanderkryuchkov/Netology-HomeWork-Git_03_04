@@ -97,6 +97,7 @@ class TV: ElectronicDevices {
 
 var myTV = TV(modelDevice: "Samsung QE55")
 
+// Тестовые вызовы
 myTV.whatModelDevice()
 myTV.isWorking()
 myTV.changeChannelTV(newChannel: ChannelTV.one)
@@ -163,18 +164,24 @@ class LedTV: TV {
     
     // ПЕРЕПИСАТЬ МЕТОД, что показывается учитывая настройки громкости и цвета
     override func whatCurrentChannel() {
-//        if isWork {
-//            print("Текущий канал - \(currentChannel.label)")
-//        }else {
-//            print("Телевизор выключен! Сначала включите телевизор!")
-//        }
+        super.whatCurrentChannel()
+        print("Настройки телевизора:\(volumeTV), \(colortTV).")
     }
 }
 
 let settingsNewTV = SettingsTV()
 let newTV = LedTV(modelDevice: "Toshiba XC20", settingsTV: settingsNewTV)
+
+// Тестовые вызовы
 newTV.whatModelDevice()
+newTV.turnOn()
+newTV.whatCurrentChannel()
 newTV.volumeTurnOnOff()
-newTV.volumeTurnOnOff()
+newTV.whatCurrentChannel()
 newTV.colorTurnOnOff()
-newTV.colorTurnOnOff()
+newTV.whatCurrentChannel()
+
+
+// ЗАДАЧА №3
+print("\nЗАДАЧА №3\n")
+
