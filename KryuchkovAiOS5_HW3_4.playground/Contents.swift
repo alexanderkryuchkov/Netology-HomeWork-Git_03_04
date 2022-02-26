@@ -48,16 +48,19 @@ class TV: ElectronicDevices {
     var isWork: Bool
     private var currentChannel: ChannelTV
     
+    // метод включить ТВ
     func turnOn() {
         isWork = true
         print("Телевизор включен! Приятного просмотра.")
     }
     
+    // метод выключить ТВ
     func turnOff() {
         isWork = false
         print("Телевизор выключается! До новых встреч!")
     }
     
+    // метод проверки включен ли ТВ
     func isWorking() {
         if isWork {
             print("Телевизор включен!")
@@ -66,6 +69,7 @@ class TV: ElectronicDevices {
         }
     }
     
+    // метод проверки какой текущий канал
     func whatCurrentChannel() {
         if isWork {
             print("Текущий канал - \(currentChannel.label)")
@@ -74,6 +78,7 @@ class TV: ElectronicDevices {
         }
     }
     
+    // метод показа модели телевизора
     func whatModelDevice() {
         print("Модель телевизора - \(modelDevice)")
     }
@@ -125,23 +130,6 @@ class LedTV: TV {
     var colortTV: String = "цветной режим"
     var volumeTV: String = "звук включен"
     
-    init(modelDevice: String, settingsTV: SettingsTV) {
-        
-        if settingsTV.isColor {
-            colortTV = "цветной режим"
-        }else {
-            colortTV = "черно-белый режим"
-        }
-        
-        if settingsTV.isVolume {
-            volumeTV = "звук включен"
-        }else {
-            volumeTV = "звук выключен"
-        }
-        
-        super.init(modelDevice: modelDevice)
-    }
-    
     // Дописать функцию выключить/включить звук
     func volumeTurnOnOff() {
         if volumeTV == "звук включен"{
@@ -162,10 +150,26 @@ class LedTV: TV {
         print("Телевизор переведен в \(colortTV)")
     }
     
-    // ПЕРЕПИСАТЬ МЕТОД, что показывается учитывая настройки громкости и цвета
     override func whatCurrentChannel() {
         super.whatCurrentChannel()
         print("Настройки телевизора:\(volumeTV), \(colortTV).")
+    }
+    
+    init(modelDevice: String, settingsTV: SettingsTV) {
+        
+        if settingsTV.isColor {
+            colortTV = "цветной режим"
+        }else {
+            colortTV = "черно-белый режим"
+        }
+        
+        if settingsTV.isVolume {
+            volumeTV = "звук включен"
+        }else {
+            volumeTV = "звук выключен"
+        }
+        
+        super.init(modelDevice: modelDevice)
     }
 }
 
@@ -185,3 +189,56 @@ newTV.whatCurrentChannel()
 // ЗАДАЧА №3
 print("\nЗАДАЧА №3\n")
 
+// К сожалению не придумал как сделать enum со связанными значениями не переписывая родительский класс где enum с телеканалами. Точнее придумал, но это придется половину методов в родительском классе TV переписывать. По-этому решил оставить так. Мне кажется так правильно, ведь в противном случае слишком много кода пришлось бы изменять, что в принципе не является верным путем.
+//Перечисление вариантов подключения к телевизору
+enum SettingsInputTV: Int {
+    case tv
+    case hdmi
+    
+    var label: String {
+        switch self {
+            case .tv: return "Телевидение"
+            case .hdmi: return "HDMI"
+        }
+    }
+}
+
+
+class NewHDMITV: LedTV {
+    
+    private var typeInput: SettingsInputTV
+    
+    // метод переключения варианта выбора источника
+    func changeInputTV() {
+        if typeInput == SettingsInputTV.tv {
+            typeInput = SettingsInputTV.hdmi
+            print("Включен режим: \(SettingsInputTV.hdmi.label)")
+        }else {
+            typeInput = SettingsInputTV.tv
+            print("Включен режим: \(SettingsInputTV.tv.label)")
+        }
+    }
+    
+    override func whatCurrentChannel() {
+        if typeInput == SettingsInputTV.tv {
+            super.whatCurrentChannel()
+        }else {
+            print("Включен режим HDMI. Переключитель на режим телевидения.")
+        }
+    }
+    
+    override init(modelDevice: String, settingsTV: SettingsTV) {
+        self.typeInput = SettingsInputTV.tv
+        super.init(modelDevice: modelDevice, settingsTV: settingsTV)
+    }
+}
+
+let newHDMITV = NewHDMITV(modelDevice: "Sony E200", settingsTV: settingsNewTV)
+
+// Тестовые вызовы
+newHDMITV.whatModelDevice()
+newHDMITV.turnOn()
+newHDMITV.changeInputTV()
+newHDMITV.whatCurrentChannel()
+newHDMITV.changeInputTV()
+newHDMITV.whatCurrentChannel()
