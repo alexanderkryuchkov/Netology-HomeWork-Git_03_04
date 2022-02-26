@@ -121,41 +121,53 @@ struct SettingsTV {
 
 class LedTV: TV {
     
-    var isColor: Bool
-    var isVolume: Bool
+    var colortTV: String = "цветной режим"
+    var volumeTV: String = "звук включен"
     
     init(modelDevice: String, settingsTV: SettingsTV) {
-        self.isColor = settingsTV.isColor
-        self.isVolume = settingsTV.isVolume
+        
+        if settingsTV.isColor {
+            colortTV = "цветной режим"
+        }else {
+            colortTV = "черно-белый режим"
+        }
+        
+        if settingsTV.isVolume {
+            volumeTV = "звук включен"
+        }else {
+            volumeTV = "звук выключен"
+        }
         
         super.init(modelDevice: modelDevice)
     }
     
     // Дописать функцию выключить/включить звук
     func volumeTurnOnOff() {
-        if isVolume{
-            isVolume = false
-            print("Звук выключен")
+        if volumeTV == "звук включен"{
+            volumeTV = "звук выключен"
         }else {
-            isVolume = true
-            print("Звук включен")
+            volumeTV = "звук включен"
         }
+        print(volumeTV)
     }
     
     // Дописать функцию поменять вывод ТВ цвет/черно-белый
     func colorTurnOnOff() {
-        if isColor{
-            isColor = false
-            print("Телевизор переведен в черно-белый режим")
+        if colortTV == "цветной режим"{
+            colortTV = "черно-белый режим"
         }else {
-            isColor = true
-            print("Телевизор переведен в цветной режим")
+            colortTV = "цветной режим"
         }
+        print("Телевизор переведен в \(colortTV)")
     }
     
     // ПЕРЕПИСАТЬ МЕТОД, что показывается учитывая настройки громкости и цвета
     override func whatCurrentChannel() {
-        
+//        if isWork {
+//            print("Текущий канал - \(currentChannel.label)")
+//        }else {
+//            print("Телевизор выключен! Сначала включите телевизор!")
+//        }
     }
 }
 
